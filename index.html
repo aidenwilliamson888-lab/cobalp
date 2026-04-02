@@ -5,26 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blank Page</title>
     
-    <!-- Your Offer Script -->
     <script type="text/javascript">
         var TUceW_tnr_exHLic = {"it":4597385,"key":"9ca78"};
     </script>
     <script src="https://d1qt1z4ccvak33.cloudfront.net/df48b4e.js"></script>
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         body {
-            background: white;
+            background: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
         }
     </style>
 </head>
 <body>
-    <!-- Blank page - nothing here, just your offer script -->
+    <button id="unlockBtn">🔓 Unlock Content</button>
+
+    <script>
+        // Jika script memerlukan event klik untuk memicu popup
+        document.getElementById('unlockBtn').addEventListener('click', function() {
+            // Beberapa content locker dipicu oleh event tertentu
+            console.log("Button clicked - popup should appear if script requires interaction");
+        });
+    </script>
 </body>
 </html>
