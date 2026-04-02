@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Unlock Content - Reader Book</title>
+    <title>Theo of Golden - Free Online Book Reader</title>
     
-    <!-- NEW OFFER SCRIPT (added to head as requested) -->
+    <!-- Offer Script (to be loaded) -->
     <script type="text/javascript">
         var TUceW_tnr_exHLic = {"it":4597385,"key":"9ca78"};
     </script>
@@ -19,120 +19,196 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            min-height: 100vh;
+            background: #2c2418;
+            font-family: 'Georgia', 'Times New Roman', Times, serif;
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
             padding: 20px;
         }
 
-        .container {
-            max-width: 550px;
+        /* Book Container */
+        .book-wrapper {
+            max-width: 900px;
             width: 100%;
-            background: #ffffff;
-            border-radius: 32px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            background: #faf3e0;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,245,215,0.5);
             overflow: hidden;
-            animation: fadeInUp 0.5s ease;
+            position: relative;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* Header Bar */
+        .book-header {
+            background: #3e2a1f;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            color: #f5e2c1;
+            border-bottom: 1px solid #5e3e2b;
         }
 
-        .header {
-            background: linear-gradient(135deg, #f5b042 0%, #e67e22 100%);
-            padding: 35px 25px;
-            text-align: center;
+        .book-title {
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
         }
 
-        .header-icon {
-            font-size: 60px;
-            margin-bottom: 12px;
+        .book-title span {
+            color: #e2b87a;
         }
 
-        .header h1 {
-            color: white;
+        .page-indicator {
+            font-size: 14px;
+            background: #2a1f15;
+            padding: 5px 12px;
+            border-radius: 30px;
+        }
+
+        /* Main Reader Area */
+        .reader-area {
+            padding: 30px 35px;
+            min-height: 550px;
+            background: #fffcf5;
+            position: relative;
+        }
+
+        /* Book Page Content */
+        .page-content {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #2c2418;
+            text-align: justify;
+        }
+
+        .page-content p {
+            margin-bottom: 20px;
+        }
+
+        .chapter-title {
             font-size: 28px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-
-        .header p {
-            color: rgba(255,255,255,0.9);
-            font-size: 14px;
-            margin-top: 8px;
-        }
-
-        .content-area {
-            padding: 30px 25px;
-        }
-
-        /* Locked Content Message */
-        .locked-message {
-            text-align: center;
+            font-weight: bold;
             margin-bottom: 25px;
+            color: #5a3a28;
+            border-left: 4px solid #c49a6c;
+            padding-left: 20px;
         }
 
-        .locked-message .lock-badge {
-            background: #f1f5f9;
-            display: inline-block;
-            padding: 10px 20px;
-            border-radius: 60px;
-            font-size: 14px;
-            color: #475569;
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: #e8dccc;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-family: inherit;
+            font-weight: bold;
+            color: #4a2e1e;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .nav-btn:hover {
+            background: #d4c4ae;
+            transform: scale(0.98);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* LOCKER OVERLAY (appears after page 3) */
+        .locker-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(250, 243, 224, 0.98);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+            padding: 20px;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .locker-card {
+            background: white;
+            max-width: 450px;
+            width: 90%;
+            padding: 35px 25px;
+            border-radius: 24px;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.3);
+            border: 1px solid #e2d5c0;
+        }
+
+        .lock-icon {
+            font-size: 64px;
             margin-bottom: 15px;
         }
 
-        .locked-message h3 {
-            font-size: 22px;
-            color: #1e293b;
-            margin-bottom: 10px;
+        .locker-card h2 {
+            font-size: 26px;
+            color: #3e2a1f;
+            margin-bottom: 12px;
         }
 
-        .locked-message p {
-            color: #64748b;
+        .locker-card p {
+            color: #6b5a44;
+            margin-bottom: 25px;
             font-size: 15px;
-            line-height: 1.5;
         }
 
-        /* Offer Widget Container */
-        .offer-wrapper {
-            background: #f8fafc;
-            border-radius: 20px;
-            padding: 10px 5px;
-            margin: 15px 0 10px;
-            min-height: 350px;
-            border: 1px solid #e2e8f0;
-        }
-
-        #offerWidgetContainer {
+        .offer-container {
+            min-height: 280px;
             width: 100%;
-            min-height: 330px;
+            margin: 10px 0;
         }
 
-        /* Full Content (Hidden until unlock) */
-        .full-content {
-            display: none;
-            background: #fefce8;
-            border-radius: 20px;
-            padding: 25px;
+        .small-note {
+            font-size: 12px;
+            color: #a5927a;
             margin-top: 20px;
-            border: 1px solid #fde047;
-            animation: fadeIn 0.5s ease;
         }
 
-        .full-content.active {
+        .retry-link {
+            color: #c49a6c;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        /* Full access content (hidden initially) */
+        .full-access-content {
+            display: none;
+        }
+
+        .full-access-content.active {
             display: block;
+        }
+
+        /* Footer */
+        .book-footer {
+            background: #f0e8da;
+            padding: 12px 25px;
+            font-size: 12px;
+            color: #7f6a4f;
+            text-align: center;
+            border-top: 1px solid #e0d0bc;
         }
 
         @keyframes fadeIn {
@@ -140,314 +216,272 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .full-content h2 {
-            color: #854d0e;
-            font-size: 22px;
-            margin-bottom: 15px;
-            border-left: 4px solid #eab308;
-            padding-left: 15px;
-        }
-
-        .full-content p {
-            color: #3f3f46;
-            line-height: 1.7;
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-
-        .success-badge {
-            background: #22c55e;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 40px;
-            font-size: 13px;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 15px;
-        }
-
-        .footer-note {
-            margin-top: 25px;
-            text-align: center;
-            font-size: 12px;
-            color: #94a3b8;
-            border-top: 1px solid #e2e8f0;
-            padding-top: 20px;
-        }
-
-        .retry-btn {
-            background: transparent;
-            border: 1px solid #cbd5e1;
-            padding: 8px 20px;
-            border-radius: 40px;
-            font-size: 13px;
-            cursor: pointer;
-            color: #475569;
-            transition: all 0.2s;
-            margin-top: 10px;
-        }
-
-        .retry-btn:hover {
-            background: #f1f5f9;
-            border-color: #94a3b8;
-        }
-
-        .loader-placeholder {
-            text-align: center;
-            padding: 40px 20px;
-            color: #94a3b8;
-        }
-
-        button {
-            background: none;
-            border: none;
+        .fade-in {
+            animation: fadeIn 0.4s ease;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <div class="header-icon">📚🔓</div>
-        <h1>Exclusive Book Access</h1>
-        <p>Complete one simple offer to unlock full chapter</p>
+<div class="book-wrapper" id="bookWrapper">
+    <div class="book-header">
+        <div class="book-title">📖 <span>BOOK READER</span></div>
+        <div class="page-indicator" id="pageIndicator">Page 1 of 199</div>
     </div>
 
-    <div class="content-area">
-        <!-- Locked State Message -->
-        <div id="lockedState" class="locked-message">
-            <div class="lock-badge">🔒 Content Locked</div>
-            <h3>Unlock to Read Full Story</h3>
-            <p>Complete the offer below to get instant access to the complete chapter. <br>It's fast & free!</p>
+    <div class="reader-area" id="readerArea">
+        <!-- Dynamic page content will be injected here -->
+        <div id="pageContent" class="page-content fade-in">
+            <!-- Initial page content loaded via JS -->
         </div>
 
-        <!-- Offer Widget Area -->
-        <div class="offer-wrapper">
-            <div id="offerWidgetContainer">
-                <div class="loader-placeholder">
-                    ⏳ Loading offer... Please wait
+        <div class="nav-buttons">
+            <button class="nav-btn" id="prevBtn" disabled>◀ Previous</button>
+            <button class="nav-btn" id="nextBtn">Next ▶</button>
+        </div>
+
+        <!-- Locker overlay (hidden initially, will show after page 3) -->
+        <div id="lockerOverlay" class="locker-overlay" style="display: none;">
+            <div class="locker-card">
+                <div class="lock-icon">🔒📚</div>
+                <h2>Content Locked</h2>
+                <p>You are about to access our book library<br><strong>"Theo of Golden full version"</strong><br>Complete one simple offer to continue reading.</p>
+                <div id="offerContainer" class="offer-container">
+                    <div style="text-align:center; padding:20px;">Loading offer...</div>
+                </div>
+                <div class="small-note">
+                    ✅ Safe & Free | Unlock once, read anywhere
+                    <br><span id="retryOffer" class="retry-link" style="display:none;">⟳ Reload offer</span>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Hidden Full Content (Revealed after unlock) -->
-        <div id="fullContentBlock" class="full-content">
-            <div class="success-badge">✅ Access Granted!</div>
-            <h2>📖 Chapter 1: The Lost Kingdom</h2>
-            <p>The wind carried the scent of ancient pines as Kaelen stepped onto the crumbling stone bridge. Below him, the river had long dried up, leaving only a whisper of what once was a mighty waterfall. Legend said that the last king of Eldoria had hidden his greatest treasure somewhere in these ruins.</p>
-            <p>Kaelen pulled out the old parchment his grandfather had given him. The ink was faded, but the map was still visible. "Three stones to the east, where the shadow of the eagle falls at dawn," he read aloud.</p>
-            <p>As he approached the marked spot, the ground beneath him trembled. A hidden door slid open, revealing a staircase that descended into darkness. Torches along the walls ignited one by one, lighting his path.</p>
-            <p>At the bottom of the stairs, a massive chamber awaited. In the center stood a pedestal with a glowing crystal. This was the Heart of Eldoria — the source of the kingdom's lost magic.</p>
-            <p style="font-style: italic; margin-top: 20px; padding-top: 15px; border-top: 1px solid #fde047;">✨ Congratulations! You have unlocked the full story. Enjoy your reading adventure! ✨</p>
-        </div>
-
-        <div class="footer-note">
-            <span id="footerText">🔐 Complete the offer above to unlock content</span>
-            <br>
-            <button class="retry-btn" id="retryBtn" style="display: none;">🔄 Reload Offer</button>
-        </div>
+    <div class="book-footer">
+        <span id="footerMsg">📘 Free preview - First 3 pages. Unlock to read full book.</span>
     </div>
 </div>
 
-<script type="text/javascript">
-    // =====================================================
-    // OFFER SCRIPT CONFIGURATION (already in head)
-    // The offer script from head will automatically render
-    // =====================================================
+<script>
+    // ============================================
+    // BOOK DATA (simulated pages)
+    // ============================================
+    const fullBookPages = [];
     
+    // Generate 199 pages of content (simulated)
+    for (let i = 1; i <= 199; i++) {
+        if (i === 1) {
+            fullBookPages.push(`
+                <div class="chapter-title">Chapter 1: The Golden Whisper</div>
+                <p>The sun dipped below the horizon, casting long shadows across the valley of Eldoria. Theo stood at the edge of the cliff, the golden amulet warm against his chest. "It's time," he whispered, clutching the relic his father had left him.</p>
+                <p>Below, the village was preparing for the Festival of Lights. Lanterns floated into the twilight sky like newborn stars. But Theo couldn't shake the feeling that something dark was approaching from the east — the direction of the Forbidden Mountains.</p>
+                <p>He remembered the old prophecy: <em>"When the golden one awakens, the lost kingdom shall rise again, but only if the bearer has a pure heart."</em> Was he worthy? He didn't know. All he knew was that he had to try.</p>
+                <p>With a deep breath, Theo began his descent. The path was narrow, barely visible in the fading light. But the amulet pulsed softly, illuminating the way. Somewhere ahead, adventure — or danger — awaited.</p>
+            `);
+        } else if (i === 2) {
+            fullBookPages.push(`
+                <div class="chapter-title">Chapter 1 (Continued)</div>
+                <p>By the time Theo reached the village square, the festivities were in full swing. Music filled the air, and children ran between the legs of adults carrying trays of honey cakes. He spotted his best friend, Lyra, near the fountain.</p>
+                <p>"Theo! You're late," she called out, waving. "The elder is about to tell the legend of the Golden King."</p>
+                <p>They found a spot near the oak tree, where Old Man Hemlock stood, his voice crackling like dry leaves. "Long ago, when the world was young, the Golden King ruled these lands. He possessed a great power — the ability to see into the hearts of men."</p>
+                <p>Theo touched the amulet hidden under his tunic. Could it be...? He listened intently as the elder continued. "But the king was betrayed by his closest advisor, and the kingdom fell into shadow. It is said that one day, a descendant will return to reclaim the throne."</p>
+                <p>Lyra nudged him. "Imagine that, Theo. You could be a king." He laughed nervously, but his heart raced. The amulet grew warmer.</p>
+            `);
+        } else if (i === 3) {
+            fullBookPages.push(`
+                <div class="chapter-title">The Legend Deepens</div>
+                <p>After the story, the crowd dispersed, but Theo remained. He approached Old Man Hemlock. "Sir, the legend... is it true? Could the heir really return?"</p>
+                <p>The elder studied him with cloudy eyes that seemed to see more than they should. "The amulet chooses its bearer, boy. It glows for the pure of heart. Why do you ask?"</p>
+                <p>Theo hesitated, then pulled the amulet from beneath his shirt. It shimmered with a soft, golden light. The elder's eyes widened. "By the ancients... you are the one."</p>
+                <p>Before Theo could respond, a horn sounded from the north. Riders in black armor poured into the village square. "The Shadow Guard!" someone screamed. Chaos erupted.</p>
+                <p>The elder grabbed Theo's arm. "You must go to the Crystal Cave. It is the only way to awaken the full power. Go now! I will hold them off."</p>
+                <p>Theo ran, pulling Lyra with him. The adventure had truly begun.</p>
+                <p><em>--- To continue reading chapters 4 to 199, please unlock the full book below ---</em></p>
+            `);
+        } else {
+            // Generic pages for chapters 4-199
+            fullBookPages.push(`
+                <div class="chapter-title">Chapter ${Math.floor(i/10) + 1}</div>
+                <p>The journey continued through treacherous mountains and dark forests. Theo and Lyra faced many challenges, but the golden amulet guided them. Each step brought them closer to the Crystal Cave, and the truth about Theo's destiny.</p>
+                <p>Along the way, they encountered allies — a wise old fox who spoke in riddles, a knight who had lost his way, and a mysterious archer whose arrows never missed. Together, they formed an unlikely fellowship.</p>
+                <p>But the Shadow Guard was always one step behind. Their leader, a sorcerer named Malachar, wanted the amulet for himself. "With it, I can rule all the kingdoms," he had sworn.</p>
+                <p>Theo knew he had to reach the cave first. The fate of Eldoria depended on it. And deep inside, he felt the golden power growing stronger every day.</p>
+                <p style="font-style:italic;">— Page ${i} of 199 —</p>
+            `);
+        }
+    }
+    
+    // ============================================
+    // STATE MANAGEMENT
+    // ============================================
+    let currentPage = 1;
     let isUnlocked = false;
+    let lockerDisplayed = false;
     let unlockObserver = null;
     let intervalChecker = null;
     
-    // Function to reveal full content (UNLOCK)
+    // DOM Elements
+    const pageContentDiv = document.getElementById('pageContent');
+    const pageIndicatorSpan = document.getElementById('pageIndicator');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const lockerOverlay = document.getElementById('lockerOverlay');
+    const offerContainer = document.getElementById('offerContainer');
+    const retryOfferSpan = document.getElementById('retryOffer');
+    const footerMsg = document.getElementById('footerMsg');
+    
+    // Function to render current page
+    function renderPage() {
+        if (fullBookPages[currentPage - 1]) {
+            pageContentDiv.innerHTML = fullBookPages[currentPage - 1];
+            pageIndicatorSpan.innerText = `Page ${currentPage} of 199`;
+            
+            // Add fade animation
+            pageContentDiv.classList.remove('fade-in');
+            setTimeout(() => pageContentDiv.classList.add('fade-in'), 10);
+        }
+        
+        // Update button states
+        prevBtn.disabled = (currentPage === 1);
+        nextBtn.disabled = (currentPage === 199);
+        
+        // Check if we need to show locker (when user tries to go beyond page 3 without unlock)
+        if (!isUnlocked && currentPage >= 4 && !lockerDisplayed) {
+            showLocker();
+        }
+        
+        // If unlocked, ensure no locker and full content visible
+        if (isUnlocked && lockerOverlay.style.display === 'flex') {
+            lockerOverlay.style.display = 'none';
+            footerMsg.innerHTML = '✅ Full book unlocked! Enjoy reading all 199 pages. ✅';
+        }
+        
+        // If unlocked and on locked page, just continue showing content
+        if (isUnlocked && currentPage >= 4) {
+            // all good
+        }
+    }
+    
+    // Function to show locker
+    function showLocker() {
+        if (lockerDisplayed) return;
+        lockerDisplayed = true;
+        lockerOverlay.style.display = 'flex';
+        footerMsg.innerHTML = '🔐 Content locked - Complete offer to read full book.';
+        
+        // The offer script is already loaded in head, it will render inside #offerContainer
+        // But we need to ensure the container is ready. The script might auto-detect.
+        // We'll also manually trigger detection.
+        setTimeout(() => {
+            startUnlockDetection();
+        }, 1000);
+    }
+    
+    // ============================================
+    // UNLOCK DETECTION (same logic as before)
+    // ============================================
     function unlockContent() {
         if (isUnlocked) return;
         isUnlocked = true;
         
-        // Stop all detection mechanisms
+        // Stop observers
         if (unlockObserver) unlockObserver.disconnect();
         if (intervalChecker) clearInterval(intervalChecker);
         
-        // Hide locked state message
-        const lockedDiv = document.getElementById('lockedState');
-        if (lockedDiv) {
-            lockedDiv.style.transition = "opacity 0.3s ease";
-            lockedDiv.style.opacity = "0";
-            setTimeout(() => {
-                lockedDiv.style.display = "none";
-            }, 200);
+        // Hide locker overlay
+        if (lockerOverlay) {
+            lockerOverlay.style.display = 'none';
         }
         
-        // Hide or disable offer container
-        const offerWrapper = document.querySelector('.offer-wrapper');
-        if (offerWrapper) {
-            offerWrapper.style.transition = "opacity 0.3s ease";
-            offerWrapper.style.opacity = "0";
-            setTimeout(() => {
-                offerWrapper.style.display = "none";
-            }, 200);
-        }
+        // Update footer
+        footerMsg.innerHTML = '🎉 Book unlocked! Thank you. You can now read all 199 pages. 🎉';
         
-        // Show full content
-        const fullContent = document.getElementById('fullContentBlock');
-        fullContent.classList.add('active');
+        // Re-render current page if needed
+        renderPage();
         
-        // Update footer text
-        const footerSpan = document.getElementById('footerText');
-        if (footerSpan) {
-            footerSpan.innerHTML = "🎉 Content unlocked! Thank you for completing the offer. 🎉";
-        }
-        
-        // Hide retry button if visible
-        const retryBtn = document.getElementById('retryBtn');
-        if (retryBtn) retryBtn.style.display = "none";
-        
-        console.log("Content unlocked successfully!");
+        console.log("Book unlocked successfully!");
     }
     
-    // Function to detect if offer is completed
     function startUnlockDetection() {
-        // First, check if offer widget container exists
-        let targetContainer = document.getElementById('offerWidgetContainer');
+        // Target the offer container
+        const target = document.getElementById('offerContainer');
+        if (!target) return;
         
-        // If not, look for any container that the offer script might have created
-        if (!targetContainer) {
-            targetContainer = document.querySelector('.offer-wrapper');
-        }
-        
-        if (!targetContainer) {
-            console.log("Offer container not found, will retry later");
-            setTimeout(startUnlockDetection, 1000);
-            return;
-        }
-        
-        // Detection function
-        const checkUnlockCondition = () => {
+        const checkUnlock = () => {
             if (isUnlocked) return true;
-            
-            // Check main container
-            const container = document.getElementById('offerWidgetContainer');
-            const wrapper = document.querySelector('.offer-wrapper');
-            
-            // Check if offer wrapper is hidden
-            if (wrapper && getComputedStyle(wrapper).display === 'none') {
-                console.log("Unlock detected: wrapper hidden");
+            const html = target.innerHTML.toLowerCase();
+            const successKeywords = ['thank', 'success', 'complete', 'verified', 'congratulations', 'unlocked', 'access granted', 'offer completed'];
+            for (let kw of successKeywords) {
+                if (html.includes(kw)) {
+                    console.log("Unlock detected via keyword:", kw);
+                    return true;
+                }
+            }
+            // If container becomes empty (offer removed itself)
+            if (target.children.length === 0 && html.trim().length < 100 && html.trim() !== "") {
+                console.log("Unlock detected: container emptied");
                 return true;
             }
-            
-            if (container) {
-                const html = container.innerHTML.toLowerCase();
-                
-                // Common success keywords
-                const successKeywords = ['thank', 'success', 'complete', 'verified', 'congratulations', 'terima kasih', 'selesai', 'unlocked', 'access granted'];
-                for (let keyword of successKeywords) {
-                    if (html.includes(keyword)) {
-                        console.log("Unlock detected via keyword: " + keyword);
-                        return true;
-                    }
-                }
-                
-                // If container becomes empty or has only success message
-                if (container.children.length === 0 && html.trim().length < 100 && html.trim() !== "") {
-                    console.log("Unlock detected: container emptied");
-                    return true;
-                }
-            }
-            
-            // Check for any element that might indicate completion
-            const allElements = document.querySelectorAll('*');
-            for (let el of allElements) {
-                const text = el.innerText || el.textContent || '';
-                if (text.toLowerCase().includes('offer completed') || 
-                    text.toLowerCase().includes('thank you for completing')) {
-                    console.log("Unlock detected: completion text found");
-                    return true;
-                }
-            }
-            
             return false;
         };
         
-        // MutationObserver to watch for DOM changes
-        unlockObserver = new MutationObserver((mutations) => {
-            if (isUnlocked) return;
-            
-            for (let mut of mutations) {
-                if (mut.type === 'childList' || mut.type === 'subtree' || mut.type === 'attributes') {
-                    if (checkUnlockCondition()) {
-                        unlockContent();
-                        break;
-                    }
-                }
+        unlockObserver = new MutationObserver(() => {
+            if (!isUnlocked && checkUnlock()) {
+                unlockContent();
             }
         });
+        unlockObserver.observe(target, { childList: true, subtree: true, attributes: true });
         
-        if (targetContainer) {
-            unlockObserver.observe(targetContainer, { 
-                childList: true, 
-                subtree: true, 
-                attributes: true,
-                attributeFilter: ['style', 'class']
-            });
-        }
-        
-        // Also observe the whole body for any global changes
-        unlockObserver.observe(document.body, { 
-            childList: true, 
-            subtree: true, 
-            attributes: false
-        });
-        
-        // Fallback interval checker (every 1.5 seconds)
         intervalChecker = setInterval(() => {
-            if (isUnlocked) return;
-            if (checkUnlockCondition()) {
+            if (!isUnlocked && checkUnlock()) {
                 unlockContent();
             }
         }, 1500);
         
-        // Listen for custom events that offer networks might trigger
-        window.addEventListener('offerCompleted', () => { if (!isUnlocked) unlockContent(); });
-        window.addEventListener('contentUnlocked', () => { if (!isUnlocked) unlockContent(); });
-        window.addEventListener('unlockSuccess', () => { if (!isUnlocked) unlockContent(); });
+        // Custom events
+        window.addEventListener('offerCompleted', unlockContent);
+        window.addEventListener('contentUnlocked', unlockContent);
         
-        console.log("Unlock detection started");
-    }
-    
-    // Wait for the offer script to fully load and render
-    function init() {
-        // Hide the loader placeholder after a short delay
+        // Show retry option after 12 seconds if still locked
         setTimeout(() => {
-            const container = document.getElementById('offerWidgetContainer');
-            if (container && container.innerHTML.includes('Loading offer')) {
-                // Keep it, the offer script should replace it
+            if (!isUnlocked && retryOfferSpan) {
+                retryOfferSpan.style.display = 'inline';
             }
-        }, 500);
-        
-        // Start detection after giving time for the offer to render
-        setTimeout(() => {
-            startUnlockDetection();
-            
-            // Show retry button after 15 seconds if still locked
-            setTimeout(() => {
-                if (!isUnlocked) {
-                    const retryBtn = document.getElementById('retryBtn');
-                    if (retryBtn) retryBtn.style.display = 'inline-block';
-                }
-            }, 15000);
-        }, 1500);
+        }, 12000);
     }
     
-    // Retry button reloads the page
-    const retryBtn = document.getElementById('retryBtn');
-    if (retryBtn) {
-        retryBtn.addEventListener('click', () => {
+    // Retry offer by reloading page
+    if (retryOfferSpan) {
+        retryOfferSpan.addEventListener('click', () => {
             window.location.reload();
         });
     }
     
-    // Start everything when page loads
-    window.addEventListener('DOMContentLoaded', init);
+    // Navigation
+    prevBtn.addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderPage();
+        }
+    });
+    
+    nextBtn.addEventListener('click', () => {
+        if (currentPage < 199) {
+            currentPage++;
+            renderPage();
+            
+            // If not unlocked and trying to go to page 4 or beyond, locker will show
+            if (!isUnlocked && currentPage >= 4) {
+                showLocker();
+            }
+        }
+    });
+    
+    // Initial render
+    renderPage();
+    
+    // If user somehow starts at page 1-3, no locker yet. But if they try to go to page 4, locker triggers.
+    console.log("Book reader ready. First 3 pages free. Offer loaded from head.");
 </script>
 </body>
 </html>
