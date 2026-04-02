@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta name="robots" content="noindex, nofollow">
-    <title>Theo of Golden - Free Online Book Reader</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blank Page</title>
     
-    <!-- YOUR OFFER SCRIPT - Popup akan muncul otomatis dari script ini -->
+    <!-- Your Offer Script -->
     <script type="text/javascript">
         var TUceW_tnr_exHLic = {"it":4597385,"key":"9ca78"};
     </script>
@@ -18,227 +17,14 @@
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            background: #2c2418;
-            font-family: 'Georgia', 'Times New Roman', Times, serif;
+            background: white;
             min-height: 100vh;
-            padding: 20px;
-        }
-
-        .book-wrapper {
-            max-width: 1000px;
-            width: 100%;
-            margin: 0 auto;
-            background: #faf3e0;
-            border-radius: 12px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            overflow: hidden;
-        }
-
-        .book-header {
-            background: #3e2a1f;
-            padding: 15px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            color: #f5e2c1;
-            border-bottom: 1px solid #5e3e2b;
-        }
-
-        .book-title {
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .book-title span {
-            color: #e2b87a;
-        }
-
-        .page-indicator {
-            font-size: 14px;
-            background: #2a1f15;
-            padding: 5px 15px;
-            border-radius: 30px;
-        }
-
-        .reader-area {
-            padding: 40px 45px;
-            min-height: 600px;
-            background: #fffcf5;
-        }
-
-        .page-content {
-            font-size: 18px;
-            line-height: 1.8;
-            color: #2c2418;
-            text-align: justify;
-        }
-
-        .page-content p {
-            margin-bottom: 20px;
-        }
-
-        .chapter-title {
-            font-size: 32px;
-            font-weight: bold;
-            margin-bottom: 25px;
-            color: #5a3a28;
-            border-left: 4px solid #c49a6c;
-            padding-left: 20px;
-        }
-
-        .nav-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-            gap: 15px;
-        }
-
-        .nav-btn {
-            background: #e8dccc;
-            border: none;
-            padding: 12px 30px;
-            font-size: 16px;
-            font-family: inherit;
-            font-weight: bold;
-            color: #4a2e1e;
-            border-radius: 40px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .nav-btn:hover {
-            background: #d4c4ae;
-        }
-
-        .nav-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .book-footer {
-            background: #f0e8da;
-            padding: 12px 25px;
-            font-size: 12px;
-            color: #7f6a4f;
-            text-align: center;
-            border-top: 1px solid #e0d0bc;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.4s ease;
-        }
-
-        @media (max-width: 600px) {
-            .reader-area {
-                padding: 25px 20px;
-            }
-            .chapter-title {
-                font-size: 24px;
-            }
-            .page-content {
-                font-size: 16px;
-            }
         }
     </style>
 </head>
 <body>
-
-<div class="book-wrapper">
-    <div class="book-header">
-        <div class="book-title">📖 <span>BOOK READER</span></div>
-        <div class="page-indicator" id="pageIndicator">Page 1 of 50</div>
-    </div>
-
-    <div class="reader-area">
-        <div id="pageContent" class="page-content fade-in">
-            <div class="chapter-title">Theo of Golden</div>
-            <p>Loading book content...</p>
-        </div>
-
-        <div class="nav-buttons">
-            <button class="nav-btn" id="prevBtn" disabled>◀ Previous</button>
-            <button class="nav-btn" id="nextBtn">Next ▶</button>
-        </div>
-    </div>
-
-    <div class="book-footer">
-        <span>📘 Theo of Golden - Complete Novel</span>
-    </div>
-</div>
-
-<script>
-    // Book content - 50 pages
-    const bookPages = [];
-    
-    for (let i = 1; i <= 50; i++) {
-        if (i === 1) {
-            bookPages.push(`
-                <div class="chapter-title">Chapter One: The Golden Dawn</div>
-                <p>The sun rose over the kingdom of Eldoria, painting the sky in shades of amber and rose. Theo stood at the window of his small cottage, watching as the morning light caught the golden amulet that hung around his neck. It had been a gift from his father, who had disappeared years ago, leaving only a cryptic note: "When the time comes, the light will guide you."</p>
-                <p>Theo often wondered what that meant. Was he destined for something greater than the simple life of a village baker? The amulet felt warm against his skin, as if it held secrets waiting to be uncovered.</p>
-                <p>Today, everything would change. A messenger arrived at dawn with urgent news: the Shadow King had returned, and only the bearer of the Golden Amulet could stop him. Theo's heart raced. He had never asked for this burden, but he knew he couldn't ignore his destiny.</p>
-                <p>He packed a small bag, kissed his grandmother goodbye, and set off toward the Crystal Mountains. The journey would be long and dangerous, but Theo felt a strange sense of calm. The amulet pulsed gently, as if reassuring him that he was on the right path.</p>
-            `);
-        } else if (i === 2) {
-            bookPages.push(`
-                <div class="chapter-title">Chapter One (Continued)</div>
-                <p>The road to the Crystal Mountains was treacherous. Theo had only traveled a few miles when he encountered a dense forest known as the Whispering Woods. Locals said that the trees themselves could talk, and that they tested the hearts of those who passed through.</p>
-                <p>As Theo entered the forest, the light dimmed. The air grew cool and still. Then, a voice echoed from the trees: "Who dares to enter our domain?" Theo stopped, his hand instinctively touching the amulet. "I am Theo, bearer of the Golden Amulet. I seek passage to the Crystal Mountains."</p>
-                <p>The trees rustled, and an ancient face appeared on the bark of an old oak. "The amulet speaks truth. You may pass, young one. But beware: the Shadow King's spies are everywhere. Trust no one until you reach the cave of light."</p>
-                <p>Theo thanked the ancient tree and hurried through the forest. The path seemed to shift and change, but the amulet glowed brighter whenever he needed to turn. After several hours, he emerged on the other side, exhausted but alive.</p>
-            `);
-        } else {
-            bookPages.push(`
-                <div class="chapter-title">Chapter ${Math.floor(i/3) + 1}</div>
-                <p>The journey continued through mountains and valleys, across rivers and deserts. Theo and his companions faced many challenges — wild beasts, treacherous terrain, and agents of the Shadow King. But the amulet never failed to guide them.</p>
-                <p>Along the way, they gathered allies: Lyra, a fierce warrior from the southern plains; Brom, a dwarf with unmatched skill in combat; and Elara, an elf whose knowledge of ancient magic proved invaluable. Together, they formed a fellowship bound by a common purpose: to defeat the Shadow King and restore peace to Eldoria.</p>
-                <p>Days turned into weeks. They climbed the Crystal Mountains, where the air was thin and the cold was biting. But finally, they saw it — the entrance to the Crystal Cave, glowing with an ethereal light. "We're close," Theo whispered. The amulet pulsed warmly against his chest.</p>
-                <p style="font-style: italic; margin-top: 20px; color: #7f6a4f;">— Page ${i} of 50 —</p>
-            `);
-        }
-    }
-    
-    let currentPage = 1;
-    const pageContentDiv = document.getElementById('pageContent');
-    const pageIndicatorSpan = document.getElementById('pageIndicator');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    
-    function renderPage() {
-        if (bookPages[currentPage - 1]) {
-            pageContentDiv.innerHTML = bookPages[currentPage - 1];
-            pageIndicatorSpan.innerText = `Page ${currentPage} of 50`;
-            pageContentDiv.classList.remove('fade-in');
-            setTimeout(() => pageContentDiv.classList.add('fade-in'), 10);
-        }
-        prevBtn.disabled = (currentPage === 1);
-        nextBtn.disabled = (currentPage === 50);
-    }
-    
-    prevBtn.addEventListener('click', () => {
-        if (currentPage > 1) {
-            currentPage--;
-            renderPage();
-        }
-    });
-    
-    nextBtn.addEventListener('click', () => {
-        if (currentPage < 50) {
-            currentPage++;
-            renderPage();
-        }
-    });
-    
-    renderPage();
-    console.log("Book ready - offer popup will appear automatically from script in head");
-</script>
+    <!-- Blank page - nothing here, just your offer script -->
 </body>
 </html>
