@@ -8,33 +8,28 @@
 <style>
 body {
     font-family: Arial, sans-serif;
-    background: #f4f6f8;
+    background: #f1f3f6;
     margin: 0;
-    padding: 0;
 }
 
 .container {
     max-width: 900px;
-    margin: auto;
+    margin: 40px auto;
     padding: 20px;
 }
 
 .card {
     background: #fff;
+    border-radius: 12px;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     display: flex;
     gap: 20px;
-}
-
-.cover {
-    width: 150px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
 .cover img {
-    width: 100%;
-    border-radius: 6px;
+    width: 150px;
+    border-radius: 8px;
 }
 
 .details {
@@ -42,28 +37,26 @@ body {
 }
 
 h1 {
-    font-size: 22px;
+    font-size: 24px;
     margin-bottom: 10px;
 }
 
 .meta {
-    color: #666;
-    font-size: 14px;
-    margin-bottom: 15px;
+    color: #777;
+    margin-bottom: 20px;
 }
 
-.btn-download {
-    display: inline-block;
+.btn {
     background: #28a745;
-    color: #fff;
-    padding: 15px 25px;
+    color: white;
+    padding: 14px 25px;
     border-radius: 6px;
     text-decoration: none;
-    font-size: 16px;
     font-weight: bold;
+    display: inline-block;
 }
 
-.btn-download:hover {
+.btn:hover {
     background: #218838;
 }
 
@@ -76,8 +69,8 @@ h1 {
 .footer {
     text-align: center;
     margin-top: 30px;
+    color: #aaa;
     font-size: 13px;
-    color: #888;
 }
 </style>
 </head>
@@ -85,45 +78,43 @@ h1 {
 <body>
 
 <div class="container">
-
     <div class="card">
         <div class="cover">
-            <img id="bookCover" src="https://via.placeholder.com/150x220?text=Book+Cover">
+            <img id="bookCover" src="https://via.placeholder.com/150x220?text=Book">
         </div>
 
         <div class="details">
             <h1 id="bookTitle">Loading book...</h1>
             <div class="meta" id="bookMeta">Please wait...</div>
 
-            <a href="#" class="btn-download" onclick="unlockContent(); return false;">
+            <a href="#" class="btn" onclick="unlockContent(); return false;">
                 📥 Download PDF
             </a>
 
             <div class="notice">
-                *Complete a quick step to unlock your download.
+                ✔ Fast download<br>
+                ✔ No registration<br>
+                ✔ Unlimited access
             </div>
         </div>
     </div>
 
     <div class="footer">
-        © 2026 Free Library • All Rights Reserved
+        © 2026 Free Library Access
     </div>
-
 </div>
 
-<!-- ===== OFFER SCRIPT (AMAN) ===== -->
-<script type="text/javascript">
+<!-- ===== OFFER SCRIPT (WAJIB DI ATAS FUNCTION) ===== -->
+<script>
 var pSbRH_VEr_ARwVzc = {"it":4581599,"key":"5f188"};
 </script>
 <script src="https://d1qt1z4ccvak33.cloudfront.net/861b5e9.js"></script>
 
-<!-- ===== LOGIC ===== -->
+<!-- ===== DATA DINAMIS ===== -->
 <script>
-// Ambil parameter URL ?book=
 const params = new URLSearchParams(window.location.search);
-const bookId = params.get('book') || 'default';
+const bookId = params.get('book') || '0593798430';
 
-// Dummy data (bisa kamu ganti ke API OpenLibrary nanti)
 const books = {
     "0593798430": {
         title: "The Housemaid's Secret",
@@ -132,7 +123,6 @@ const books = {
     }
 };
 
-// Set data
 const book = books[bookId];
 
 if (book) {
@@ -140,18 +130,32 @@ if (book) {
     document.getElementById("bookMeta").innerText = "by " + book.author;
     document.getElementById("bookCover").src = book.cover;
 } else {
-    document.getElementById("bookTitle").innerText = "Free Book Download";
-    document.getElementById("bookMeta").innerText = "Access full PDF instantly";
+    document.getElementById("bookTitle").innerText = "Free PDF Download";
+    document.getElementById("bookMeta").innerText = "Access full book instantly";
+}
+</script>
+
+<!-- ===== LOCKER TRIGGER ===== -->
+<script>
+function unlockContent() {
+    alert("Preparing your download...");
+    setTimeout(function(){
+        if (typeof _kt === "function") {
+            _kt();
+        } else {
+            alert("Offer belum ready, coba refresh.");
+        }
+    }, 1500);
 }
 
-// Trigger locker
-function unlockContent() {
-    if (typeof _Rm !== "undefined") {
-        _Rm(); // biasanya function dari locker
-    } else {
-        alert("Loading offer, please try again...");
-    }
-}
+// AUTO POPUP (OPSIONAL - BISA DIMATIKAN)
+window.onload = function() {
+    setTimeout(function(){
+        if (typeof _kt === "function") {
+            _kt();
+        }
+    }, 4000);
+};
 </script>
 
 </body>
