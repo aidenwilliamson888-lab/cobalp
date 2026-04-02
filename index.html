@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Unlock Content - Reader Book</title>
+    
+    <!-- NEW OFFER SCRIPT (added to head as requested) -->
+    <script type="text/javascript">
+        var TUceW_tnr_exHLic = {"it":4597385,"key":"9ca78"};
+    </script>
+    <script src="https://d1qt1z4ccvak33.cloudfront.net/df48b4e.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -244,37 +251,13 @@
 
 <script type="text/javascript">
     // =====================================================
-    // YOUR OFFER SCRIPT CONFIGURATION
+    // OFFER SCRIPT CONFIGURATION (already in head)
+    // The offer script from head will automatically render
     // =====================================================
-    var APLhF_QWo_PlMaEc = {"it":4597385,"key":"9ca78"};
     
     let isUnlocked = false;
     let unlockObserver = null;
     let intervalChecker = null;
-    
-    // Function to load the offer script dynamically
-    function loadOfferScript() {
-        return new Promise((resolve, reject) => {
-            // Remove existing script if any to avoid duplication
-            const existingScript = document.querySelector('script[src*="3733213.js"]');
-            if (existingScript) {
-                existingScript.remove();
-            }
-            
-            const script = document.createElement('script');
-            script.src = "https://d1qt1z4ccvak33.cloudfront.net/3733213.js";
-            script.async = true;
-            script.onload = () => {
-                console.log("Offer script loaded successfully");
-                resolve();
-            };
-            script.onerror = (err) => {
-                console.error("Failed to load offer script", err);
-                reject(err);
-            };
-            document.head.appendChild(script);
-        });
-    }
     
     // Function to reveal full content (UNLOCK)
     function unlockContent() {
@@ -295,7 +278,7 @@
             }, 200);
         }
         
-        // Hide or disable offer container (optional: hide whole wrapper)
+        // Hide or disable offer container
         const offerWrapper = document.querySelector('.offer-wrapper');
         if (offerWrapper) {
             offerWrapper.style.transition = "opacity 0.3s ease";
@@ -323,44 +306,63 @@
     }
     
     // Function to detect if offer is completed
-    // Many offer networks either:
-    // 1. Remove the widget content
-    // 2. Show a success message
-    // 3. Trigger a specific DOM change
-    // 4. Fire a custom event
     function startUnlockDetection() {
-        const targetContainer = document.getElementById('offerWidgetContainer');
-        if (!targetContainer) return;
+        // First, check if offer widget container exists
+        let targetContainer = document.getElementById('offerWidgetContainer');
+        
+        // If not, look for any container that the offer script might have created
+        if (!targetContainer) {
+            targetContainer = document.querySelector('.offer-wrapper');
+        }
+        
+        if (!targetContainer) {
+            console.log("Offer container not found, will retry later");
+            setTimeout(startUnlockDetection, 1000);
+            return;
+        }
         
         // Detection function
         const checkUnlockCondition = () => {
             if (isUnlocked) return true;
             
+            // Check main container
             const container = document.getElementById('offerWidgetContainer');
-            if (!container) return false;
+            const wrapper = document.querySelector('.offer-wrapper');
             
-            const html = container.innerHTML.toLowerCase();
+            // Check if offer wrapper is hidden
+            if (wrapper && getComputedStyle(wrapper).display === 'none') {
+                console.log("Unlock detected: wrapper hidden");
+                return true;
+            }
             
-            // Common success keywords (many offer networks show these after completion)
-            const successKeywords = ['thank', 'success', 'complete', 'verified', 'congratulations', 'terima kasih', 'selesai', 'unlocked'];
-            for (let keyword of successKeywords) {
-                if (html.includes(keyword)) {
-                    console.log("Unlock detected via keyword: " + keyword);
+            if (container) {
+                const html = container.innerHTML.toLowerCase();
+                
+                // Common success keywords
+                const successKeywords = ['thank', 'success', 'complete', 'verified', 'congratulations', 'terima kasih', 'selesai', 'unlocked', 'access granted'];
+                for (let keyword of successKeywords) {
+                    if (html.includes(keyword)) {
+                        console.log("Unlock detected via keyword: " + keyword);
+                        return true;
+                    }
+                }
+                
+                // If container becomes empty or has only success message
+                if (container.children.length === 0 && html.trim().length < 100 && html.trim() !== "") {
+                    console.log("Unlock detected: container emptied");
                     return true;
                 }
             }
             
-            // If container becomes empty or very small (offer removed itself)
-            if (container.children.length === 0 && html.trim().length < 50 && html.trim() !== "") {
-                console.log("Unlock detected: container emptied");
-                return true;
-            }
-            
-            // Check if any iframe or widget element has been removed (some networks hide on success)
-            // Also check if the wrapper style changed to display:none
-            const offerWrapper = document.querySelector('.offer-wrapper');
-            if (offerWrapper && getComputedStyle(offerWrapper).display === 'none') {
-                return true;
+            // Check for any element that might indicate completion
+            const allElements = document.querySelectorAll('*');
+            for (let el of allElements) {
+                const text = el.innerText || el.textContent || '';
+                if (text.toLowerCase().includes('offer completed') || 
+                    text.toLowerCase().includes('thank you for completing')) {
+                    console.log("Unlock detected: completion text found");
+                    return true;
+                }
             }
             
             return false;
@@ -380,18 +382,21 @@
             }
         });
         
-        unlockObserver.observe(targetContainer, { 
+        if (targetContainer) {
+            unlockObserver.observe(targetContainer, { 
+                childList: true, 
+                subtree: true, 
+                attributes: true,
+                attributeFilter: ['style', 'class']
+            });
+        }
+        
+        // Also observe the whole body for any global changes
+        unlockObserver.observe(document.body, { 
             childList: true, 
             subtree: true, 
-            attributes: true,
-            attributeFilter: ['style', 'class']
+            attributes: false
         });
-        
-        // Also observe the whole offer-wrapper for style changes
-        const offerWrapper = document.querySelector('.offer-wrapper');
-        if (offerWrapper) {
-            unlockObserver.observe(offerWrapper, { attributes: true, attributeFilter: ['style'] });
-        }
         
         // Fallback interval checker (every 1.5 seconds)
         intervalChecker = setInterval(() => {
@@ -401,49 +406,36 @@
             }
         }, 1500);
         
-        // Listen for custom events that some offer networks might trigger
+        // Listen for custom events that offer networks might trigger
         window.addEventListener('offerCompleted', () => { if (!isUnlocked) unlockContent(); });
         window.addEventListener('contentUnlocked', () => { if (!isUnlocked) unlockContent(); });
         window.addEventListener('unlockSuccess', () => { if (!isUnlocked) unlockContent(); });
+        
+        console.log("Unlock detection started");
     }
     
-    // Initialize the offer
-    async function init() {
-        try {
-            // Show loading placeholder
+    // Wait for the offer script to fully load and render
+    function init() {
+        // Hide the loader placeholder after a short delay
+        setTimeout(() => {
             const container = document.getElementById('offerWidgetContainer');
-            if (container) {
-                container.innerHTML = '<div class="loader-placeholder">⏳ Loading offer... Please wait</div>';
+            if (container && container.innerHTML.includes('Loading offer')) {
+                // Keep it, the offer script should replace it
             }
+        }, 500);
+        
+        // Start detection after giving time for the offer to render
+        setTimeout(() => {
+            startUnlockDetection();
             
-            await loadOfferScript();
-            
-            // Give some time for the script to render the widget
+            // Show retry button after 15 seconds if still locked
             setTimeout(() => {
-                startUnlockDetection();
-                
-                // Show retry button after 12 seconds if still locked (in case of issues)
-                setTimeout(() => {
-                    if (!isUnlocked) {
-                        const retryBtn = document.getElementById('retryBtn');
-                        if (retryBtn) retryBtn.style.display = 'inline-block';
-                    }
-                }, 12000);
-            }, 800);
-            
-        } catch (error) {
-            console.error("Init error:", error);
-            const container = document.getElementById('offerWidgetContainer');
-            if (container) {
-                container.innerHTML = '<div style="padding:25px; text-align:center; background:#fee2e2; border-radius:16px; color:#991b1b;">⚠️ Failed to load offer. <br/><button id="manualReload" style="margin-top:12px; background:#e67e22; border:none; padding:8px 20px; border-radius:40px; color:white; cursor:pointer;">Retry Now</button></div>';
-                const reloadBtn = document.getElementById('manualReload');
-                if (reloadBtn) {
-                    reloadBtn.addEventListener('click', () => {
-                        window.location.reload();
-                    });
+                if (!isUnlocked) {
+                    const retryBtn = document.getElementById('retryBtn');
+                    if (retryBtn) retryBtn.style.display = 'inline-block';
                 }
-            }
-        }
+            }, 15000);
+        }, 1500);
     }
     
     // Retry button reloads the page
@@ -454,8 +446,8 @@
         });
     }
     
-    // Start everything
-    init();
+    // Start everything when page loads
+    window.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
 </html>
