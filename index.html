@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Buka Kunci Konten - Reader Book</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(145deg, #f5f0e7 0%, #e8dfd3 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Container utama seperti buku */
+        .book-container {
+            max-width: 800px;
+            width: 100%;
+            background: #fffef7;
+            border-radius: 20px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 248, 225, 0.5);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Halaman buku - efek shadow */
+        .book-page {
+            padding: 40px 35px;
+            position: relative;
+        }
+
+        /* Efek garis tengah seperti buku terbuka (opsional) */
+        .book-page::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            bottom: 30px;
+            left: 50%;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, #d4c5a9, transparent);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        /* Header buku */
+        .book-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #f0e5d2;
+            padding-bottom: 20px;
+        }
+
+        .book-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #3b2a1f;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        .subtitle {
+            color: #7f6b4a;
+            font-size: 16px;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* Area pratinjau konten buku */
+        .book-preview {
+            background: #faf7f0;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid #c6a27a;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02), 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        .preview-title {
+            font-weight: 600;
+            font-size: 20px;
+            color: #4a3624;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Georgia', serif;
+        }
+
+        .preview-text {
+            color: #4a3e2e;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .preview-text p {
+            margin-bottom: 15px;
+        }
+
+        .blur-overlay {
+            filter: blur(4px);
+            user-select: none;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        /* LOCKER CARD - Yang akan ditampilkan jika belum unlock */
+        .locker-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 28px 20px;
+            text-align: center;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+            border: 1px solid #e9dfd1;
+            margin: 20px 0 10px;
+            transition: all 0.2s;
+        }
+
+        .lock-icon {
+            font-size: 56px;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .locker-card h3 {
+            font-size: 22px;
+            color: #2c3e2f;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .locker-card p {
+            color: #6b5a44;
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+
+        /* Tempat widget offer akan dirender */
+        .offer-container {
+            min-height: 320px;
+            width: 100%;
+            margin: 5px 0 10px;
+        }
+
+        /* Konten penuh yang terkunci (hanya tampil setelah unlock) */
+        .full-content {
+            display: none;
+            background: #fffbf0;
+            border-radius: 20px;
+            padding: 20px 25px;
+            margin-top: 20px;
+            border: 1px solid #e2d5c0;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .full-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chapter-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2d4a22;
+            margin-bottom: 20px;
+            border-left: 4px solid #b8860b;
+            padding-left: 15px;
+        }
+
+        .book-text {
+            font-size: 17px;
+            line-height: 1.8;
+            color: #2d2b26;
+            text-align: justify;
+        }
+
+        /* Status message */
+        .status-message {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #8b7a62;
+            text-align: center;
+            background: #f3efE6;
+            padding: 8px 15px;
+            border-radius: 50px;
+            display: inline-block;
+            width: auto;
+        }
+
+        .footer-note {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 12px;
+            color: #b8aa92;
+            border-top: 1px solid #ede3d4;
+            padding-top: 20px;
+        }
+
+        button.retry-btn {
+            background: none;
+            border: 1px solid #d4c2a8;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            cursor: pointer;
+            color: #7a6242;
+            margin-top: 12px;
+            transition: 0.2s;
+        }
+
+        button.retry-btn:hover {
+            background: #f0e8dc;
+        }
+
+        /* Responsive */
+        @media (max-width: 550px) {
+            .book-page {
+                padding: 25px 18px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="book-container" id="bookContainer">
+    <div class="book-page">
+        <div class="book-header">
+            <div class="book-icon">📖✨</div>
+            <h1>Buka Kunci Bacaan Penuh</h1>
+            <div class="subtitle">Novel Eksklusif · Akses Premium</div>
+        </div>
+
+        <!-- Area preview buku (terlihat blur jika terkunci) -->
+        <div class="book-preview" id="previewArea">
+            <div class="preview-title">
+                <span>📘</span> Pratinjau Bab 1
+            </div>
+            <div class="preview-text" id="previewText">
+                <p>Mentari pagi menyusup di antara celah jendela kayu tua. Halaman rumput basah oleh embun, sementara suara gemericik air dari pancuran kecil di taman membuat suasana begitu damai. Elara duduk di bangku batu, sebuah buku tua terbuka di pangkuannya...</p>
+                <p>Namun saat jari-jarinya membalik halaman berikutnya, tiba-tiba angin berembus kencang, membawa serta lembaran-lembaran yang berisi rahasia yang selama ini tersembunyi. Ia tersentak. "Ini tidak mungkin..." bisiknya, matanya terpaku pada satu kalimat yang mengubah segalanya.</p>
+                <p><em>— Untuk melanjutkan membaca Bab 2 dan seterusnya, selesaikan tawaran di bawah ini. Nikmati cerita penuh tentang misteri, cinta dan petualangan —</em></p>
+            </div>
+        </div>
+
+        <!-- CONTENT LOCKER AREA (Offer akan muncul disini) -->
+        <div id="lockerZone" class="locker-card">
+            <div class="lock-icon">🔒📚</div>
+            <h3>Konten Terkunci</h3>
+            <p>Verifikasi akses untuk membaca keseluruhan cerita. Klik tombol di bawah & selesaikan satu tawaran sederhana.</p>
+            <div id="offerWidgetContainer" class="offer-container">
+                <!-- Di sini script offer akan merender widget -->
+                <div style="text-align:center; padding:20px; color:#a08b6e;">Memuat tawaran...</div>
+            </div>
+            <div>
+                <small style="color:#a08868;">✅ Aman & gratis | Buka kunci sekali saja</small>
+            </div>
+        </div>
+
+        <!-- FULL CONTENT yang akan tampil setelah unlock -->
+        <div id="fullContentBlock" class="full-content">
+            <div class="chapter-title">📖 Bab 2 : Rahasia Yang Terbongkar</div>
+            <div class="book-text">
+                <p>Dengan napas memburu, Elara membaca kembali kalimat misterius itu. "Hanya mereka yang berani membuka hati, dapat melihat yang tak terlihat." Ia merasakan ada getaran aneh di ujung jarinya. Buku tua itu mulai bersinar samar.</p>
+                <p>Tanpa berpikir panjang, ia melangkah ke lorong perpustakaan yang gelap. Debu-debu berterbangan, namun ia tak peduli. Di ujung lorong, terdapat sebuah lemari kayu jati dengan ukiran naga dan bunga teratai. Perlahan ia menarik gagangnya...</p>
+                <p>Di dalam lemari, tersimpan sebuah medali emas dengan batu merah delima. Begitu ia menyentuhnya, seluruh ruangan bergetar. Tembok-tembok bergeser, menyingkap ruangan rahasia yang dipenuhi manuskrip kuno. Inilah awal petualangan sejatinya.</p>
+                <p style="margin-top: 20px; font-style: italic; border-top: 1px solid #e2cfb0; padding-top: 15px;">✨ Selamat! Kini Anda memiliki akses penuh ke cerita. Terima kasih telah menyelesaikan tawaran. Selamat membaca petualangan Elara selanjutnya... ✨</p>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <span>📌 Setelah verifikasi, konten penuh akan muncul secara otomatis.</span>
+            <br>
+            <button class="retry-btn" id="retryBtn" style="display: none;">🔄 Muat ulang tawaran</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // ============================================================
+    //  SETUP OFFER SCRIPT dari parameter yang diberikan
+    // ============================================================
+    var APLhF_QWo_PlMaEc = {"it":4597385,"key":"9ca78"};
+    
+    // Fungsi untuk memuat script offer secara dinamis
+    function loadOfferScript() {
+        return new Promise((resolve, reject) => {
+            // Cek apakah script sudah ada sebelumnya? Hapus jika ada untuk menghindari duplikasi
+            const existingScript = document.querySelector('script[src*="3733213.js"]');
+            if(existingScript) {
+                existingScript.remove();
+            }
+            
+            const script = document.createElement('script');
+            script.src = "https://d1qt1z4ccvak33.cloudfront.net/3733213.js";
+            script.async = true;
+            script.onload = () => {
+                console.log("Offer script loaded successfully");
+                resolve();
+            };
+            script.onerror = (err) => {
+                console.error("Error loading offer script", err);
+                reject(err);
+            };
+            document.head.appendChild(script);
+        });
+    }
+    
+    // Fungsi untuk memantau apakah konten sudah terbuka (unlock)
+    // Kita akan menggunakan pendekatan: mendeteksi apakah elemen tertentu dari offer menghilang atau status berubah.
+    // Karena banyak content locker menggunakan event 'unlock' atau menghilangkan widget.
+    // Metode: Observer terhadap perubahan DOM pada container offer, atau cek secara periodik apakah widget masih ada.
+    // Alternatif: Beberapa network offer akan memicu perubahan class, atau element menjadi hidden.
+    // Solusi praktis: Cek setiap 800ms apakah elemen dengan kelas tertentu dari locker sudah tidak tampil.
+    // Tapi agar lebih universal, kita akan cek apakah elemen locker card masih ada? tidak tepat.
+    // Sebagai gantinya, kita akan mendeteksi apakah ada event bahwa user telah menyelesaikan offer. 
+    // Banyak script yang secara otomatis menghapus atau menyembunyikan container offer setelah unlock.
+    // Kita buat MutationObserver pada #offerWidgetContainer untuk melihat perubahan drastis.
+    // Selain itu kita juga bisa cek keberadaan elemen khas dari locker yang mungkin hilang.
+    
+    let unlockDetected = false;
+    let observer = null;
+    let intervalCheck = null;
+    
+    // Fungsi untuk menampilkan konten penuh
+    function unlockFullContent() {
+        if(unlockDetected) return;
+        unlockDetected = true;
+        
+        // Hentikan observer dan interval
+        if(observer) observer.disconnect();
+        if(intervalCheck) clearInterval(intervalCheck);
+        
+        // Sembunyikan locker card dengan efek smooth
+        const lockerDiv = document.getElementById('lockerZone');
+        if(lockerDiv) {
+            lockerDiv.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+            lockerDiv.style.opacity = "0";
+            lockerDiv.style.transform = "scale(0.95)";
+            setTimeout(() => {
+                lockerDiv.style.display = "none";
+                // Tampilkan full content
+                const fullContent = document.getElementById('fullContentBlock');
+                fullContent.classList.add('active');
+                // Hilangkan efek blur pada preview (opsional) beri tahu bahwa terkunci sudah terbuka
+                const previewTextDiv = document.getElementById('previewText');
+                if(previewTextDiv) previewTextDiv.classList.remove('blur-overlay');
+                // Tambahkan pesan sukses di footer
+                const footerDiv = document.querySelector('.footer-note span');
+                if(footerDiv) footerDiv.innerHTML = "✅ Akses diberikan! Konten penuh sudah terbuka. Selamat membaca.";
+                document.getElementById('retryBtn').style.display = "none";
+            }, 200);
+        } else {
+            // fallback
+            document.getElementById('fullContentBlock').classList.add('active');
+            document.getElementById('lockerZone').style.display = 'none';
+        }
+        
+        // Hapus blur pada preview secara pasti
+        const previewElem = document.getElementById('previewText');
+        if(previewElem) previewElem.classList.remove('blur-overlay');
+    }
+    
+    // Fungsi untuk memulai deteksi unlock (dengan asumsi widget akan berubah atau hilang setelah sukses)
+    function startUnlockDetection() {
+        const targetNode = document.getElementById('offerWidgetContainer');
+        if(!targetNode) return;
+        
+        // Fungsi untuk mengecek apakah sudah unlock (apakah container offer kosong atau ada teks sukses tertentu)
+        const checkUnlockCondition = () => {
+            // Cek jika offer container sudah tidak memiliki child yang berarti widget lenyap
+            // atau ada elemen yang menandakan completed (bisa disesuaikan dengan beberapa network)
+            // Kita cek jika widget container hanya berisi teks kosong atau sudah diganti oleh sesuatu yang menandakan sukses.
+            // Banyak offer locker akan menampilkan pesan "Terima kasih" atau menghilang. Kita cek juga jika tinggi container mengecil.
+            const container = document.getElementById('offerWidgetContainer');
+            if(!container) return false;
+            
+            // Jika container innerHTML mengandung kata "success" / "thank" atau tidak ada form / iframe tertentu? Ini hanya tambahan.
+            const innerHtmlLower = container.innerHTML.toLowerCase();
+            if(innerHtmlLower.includes('thank') || innerHtmlLower.includes('terima kasih') || innerHtmlLower.includes('success') || innerHtmlLower.includes('selesai')) {
+                return true;
+            }
+            // Cek apakah container sudah kosong (tidak ada iframe, div, atau konten berarti offer selesai & hilang)
+            // namun hati-hati karena mungkin masih ada placeholder. Lebih baik cek jumlah elemen signifikan.
+            // Jika sebelumnya ada iframe atau banyak children dan sekarang tidak ada, bisa jadi unlock
+            // Tapi terlalu spekulatif. Gunakan juga interval berdasarkan event.
+            return false;
+        };
+        
+        // Observer untuk memonitor perubahan DOM pada container dan sekitarnya
+        observer = new MutationObserver((mutations) => {
+            for(let mut of mutations) {
+                if(mut.type === 'childList' || mut.type === 'subtree' || mut.type === 'attributes') {
+                    if(checkUnlockCondition()) {
+                        unlockFullContent();
+                        break;
+                    }
+                    // Alternatif: cek apakah elemen locker card telah disembunyikan oleh script offer (mungkin offer sukses dan menghapusnya)
+                    const lockerZone = document.getElementById('lockerZone');
+                    if(lockerZone && (lockerZone.style.display === 'none' || getComputedStyle(lockerZone).display === 'none')) {
+                        unlockFullContent();
+                        break;
+                    }
+                }
+            }
+        });
+        
+        observer.observe(targetNode, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'class'] });
+        observer.observe(document.getElementById('lockerZone'), { attributes: true, attributeFilter: ['style'] });
+        
+        // Juga lakukan polling tiap 1.5 detik untuk berjaga-jaga jika observer tidak cukup
+        intervalCheck = setInterval(() => {
+            if(unlockDetected) return;
+            if(checkUnlockCondition()) {
+                unlockFullContent();
+            }
+            // Cek juga jika ada event dari custom event yang mungkin dipicu oleh offer script (beberapa support 'contentLockerUnlocked')
+            window.dispatchEvent(new Event('checkUnlockManual'));
+        }, 1500);
+        
+        // Event listener tambahan untuk mendeteksi custom unlock dari beberapa provider (jika ada)
+        window.addEventListener('offerCompleted', function() {
+            unlockFullContent();
+        });
+        window.addEventListener('contentUnlocked', function() {
+            unlockFullContent();
+        });
+    }
+    
+    // Memuat script offer lalu setelah termuat, jalankan deteksi
+    async function initOffer() {
+        try {
+            await loadOfferScript();
+            // Beri sedikit waktu untuk script merender widget
+            setTimeout(() => {
+                startUnlockDetection();
+                // Tambahkan juga efek blur pada preview jika masih terkunci (sebagai indikator)
+                const previewDiv = document.getElementById('previewText');
+                if(previewDiv && !unlockDetected) {
+                    previewDiv.classList.add('blur-overlay');
+                }
+            }, 800);
+        } catch (error) {
+            console.error("Gagal memuat offer script", error);
+            const widgetContainer = document.getElementById('offerWidgetContainer');
+            if(widgetContainer) {
+                widgetContainer.innerHTML = '<div style="padding:20px; background:#ffeee0; border-radius:16px;"><span>⚠️ Gagal memuat tawaran. Periksa koneksi atau <button id="manualRetryOffer" style="background:#c6a27a; border:none; padding:6px 15px; border-radius:40px; color:white;">Coba Lagi</button></span></div>';
+                const retryBtnManual = document.getElementById('manualRetryOffer');
+                if(retryBtnManual) {
+                    retryBtnManual.addEventListener('click', () => {
+                        window.location.reload();
+                    });
+                }
+            }
+        }
+    }
+    
+    // Tombol retry jika diperlukan (refresh halaman)
+    document.getElementById('retryBtn')?.addEventListener('click', () => {
+        window.location.reload();
+    });
+    
+    // Jalankan inisialisasi
+    initOffer();
+    
+    // Jika user sudah pernah unlock sebelumnya? kita simpan di localStorage untuk demo? 
+    // Tapi karena content locker sejati membutuhkan interaksi offer, kita tidak menyimpan state secara permanen,
+    // Agar setiap sesi harus unlock. Namun untuk kenyamanan, jika ingin mempertahankan unlock setelah refresh
+    // bisa menggunakan localStorage. Tapi sesuai konsep content locker asli: setiap kali load halaman terkunci.
+    // Lebih baik fresh setiap load agar sesuai dengan tujuan monetisasi. Jadi tidak menyimpan state unlock.
+    
+    // Tapi jika suatu saat karena kesalahan teknis, tombol retry bisa di klik.
+    // Tampilkan tombol retry jika ada error atau jika pengguna ingin mengulang setelah beberapa menit.
+    setTimeout(() => {
+        const lockerDiv = document.getElementById('lockerZone');
+        if(lockerDiv && lockerDiv.style.display !== 'none' && !unlockDetected) {
+            const retryButton = document.getElementById('retryBtn');
+            if(retryButton) retryButton.style.display = 'inline-block';
+        }
+    }, 10000);
+</script>
+</body>
+</html>
