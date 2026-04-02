@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex, nofollow">
     <title>Theo of Golden - Free Online Book Reader</title>
     
-    <!-- YOUR OFFER SCRIPT IN HEAD -->
+    <!-- YOUR OFFER SCRIPT - Popup akan muncul otomatis dari script ini -->
     <script type="text/javascript">
         var TUceW_tnr_exHLic = {"it":4597385,"key":"9ca78"};
     </script>
@@ -26,18 +26,16 @@
             padding: 20px;
         }
 
-        /* Book Container */
         .book-wrapper {
             max-width: 1000px;
             width: 100%;
             margin: 0 auto;
             background: #faf3e0;
             border-radius: 12px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,245,215,0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
             overflow: hidden;
         }
 
-        /* Header */
         .book-header {
             background: #3e2a1f;
             padding: 15px 25px;
@@ -52,7 +50,6 @@
         .book-title {
             font-size: 20px;
             font-weight: bold;
-            letter-spacing: 1px;
         }
 
         .book-title span {
@@ -66,15 +63,12 @@
             border-radius: 30px;
         }
 
-        /* Reader Area */
         .reader-area {
             padding: 40px 45px;
             min-height: 600px;
             background: #fffcf5;
-            position: relative;
         }
 
-        /* Page Content */
         .page-content {
             font-size: 18px;
             line-height: 1.8;
@@ -93,10 +87,8 @@
             color: #5a3a28;
             border-left: 4px solid #c49a6c;
             padding-left: 20px;
-            font-family: 'Georgia', serif;
         }
 
-        /* Navigation */
         .nav-buttons {
             display: flex;
             justify-content: space-between;
@@ -119,7 +111,6 @@
 
         .nav-btn:hover {
             background: #d4c4ae;
-            transform: scale(0.98);
         }
 
         .nav-btn:disabled {
@@ -127,7 +118,6 @@
             cursor: not-allowed;
         }
 
-        /* Footer */
         .book-footer {
             background: #f0e8da;
             padding: 12px 25px;
@@ -135,17 +125,6 @@
             color: #7f6a4f;
             text-align: center;
             border-top: 1px solid #e0d0bc;
-        }
-
-        /* Unlock Message */
-        .unlock-message {
-            background: #fef3c7;
-            border-left: 4px solid #f59e0b;
-            padding: 15px 20px;
-            margin-top: 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            color: #92400e;
         }
 
         @keyframes fadeIn {
@@ -175,41 +154,35 @@
 <div class="book-wrapper">
     <div class="book-header">
         <div class="book-title">📖 <span>BOOK READER</span></div>
-        <div class="page-indicator" id="pageIndicator">Page 1 of 150</div>
+        <div class="page-indicator" id="pageIndicator">Page 1 of 50</div>
     </div>
 
     <div class="reader-area">
         <div id="pageContent" class="page-content fade-in">
-            <!-- Content loaded via JS -->
+            <div class="chapter-title">Theo of Golden</div>
+            <p>Loading book content...</p>
         </div>
 
         <div class="nav-buttons">
             <button class="nav-btn" id="prevBtn" disabled>◀ Previous</button>
             <button class="nav-btn" id="nextBtn">Next ▶</button>
         </div>
-
-        <div id="unlockMessage" class="unlock-message" style="display: none;">
-            🔓 <strong>Content Unlocked!</strong> Thank you for completing the offer. You now have full access to the complete book.
-        </div>
     </div>
 
     <div class="book-footer">
-        <span id="footerMsg">📘 The Complete Novel - Theo of Golden</span>
+        <span>📘 Theo of Golden - Complete Novel</span>
     </div>
 </div>
 
 <script>
-    // ============================================
-    // BOOK CONTENT (150 pages of the novel)
-    // ============================================
+    // Book content - 50 pages
     const bookPages = [];
     
-    // Generate book content
-    for (let i = 1; i <= 150; i++) {
+    for (let i = 1; i <= 50; i++) {
         if (i === 1) {
             bookPages.push(`
                 <div class="chapter-title">Chapter One: The Golden Dawn</div>
-                <p>The sun rose over the kingdom of Eldoria, painting the sky in shades of amber and rose. Theo stood at the window of his small cottage, watching as the morning light caught the golden amulet that hung around his neck. It had been a gift from his father, who had disappeared years ago, leaving only a cryptic note: <em>"When the time comes, the light will guide you."</em></p>
+                <p>The sun rose over the kingdom of Eldoria, painting the sky in shades of amber and rose. Theo stood at the window of his small cottage, watching as the morning light caught the golden amulet that hung around his neck. It had been a gift from his father, who had disappeared years ago, leaving only a cryptic note: "When the time comes, the light will guide you."</p>
                 <p>Theo often wondered what that meant. Was he destined for something greater than the simple life of a village baker? The amulet felt warm against his skin, as if it held secrets waiting to be uncovered.</p>
                 <p>Today, everything would change. A messenger arrived at dawn with urgent news: the Shadow King had returned, and only the bearer of the Golden Amulet could stop him. Theo's heart raced. He had never asked for this burden, but he knew he couldn't ignore his destiny.</p>
                 <p>He packed a small bag, kissed his grandmother goodbye, and set off toward the Crystal Mountains. The journey would be long and dangerous, but Theo felt a strange sense of calm. The amulet pulsed gently, as if reassuring him that he was on the right path.</p>
@@ -222,58 +195,34 @@
                 <p>The trees rustled, and an ancient face appeared on the bark of an old oak. "The amulet speaks truth. You may pass, young one. But beware: the Shadow King's spies are everywhere. Trust no one until you reach the cave of light."</p>
                 <p>Theo thanked the ancient tree and hurried through the forest. The path seemed to shift and change, but the amulet glowed brighter whenever he needed to turn. After several hours, he emerged on the other side, exhausted but alive.</p>
             `);
-        } else if (i === 3) {
-            bookPages.push(`
-                <div class="chapter-title">Chapter Two: The Stranger</div>
-                <p>Beyond the Whispering Woods lay the town of Silverbrook. Theo arrived just as the evening market was closing. He found an inn called The Sleeping Fox and decided to rest for the night. The innkeeper, a plump woman with kind eyes, gave him a room and a warm meal.</p>
-                <p>That night, as Theo sat by the fire, a stranger approached him. He was tall and cloaked in gray, his face hidden in shadow. "You carry the amulet," the stranger said. It wasn't a question. Theo tensed. "Who are you?"</p>
-                <p>"A friend, I hope. My name is Kael. I served your father many years ago. He sent me to find you when the time was right." Theo's heart leaped. "You knew my father? Where is he?" Kael sighed. "That is a long story. But first, we must reach the Crystal Cave before the Shadow King's army finds us."</p>
-                <p>Theo agreed to travel with Kael. Something about the stranger felt trustworthy, but the amulet warned him to be cautious. The journey was only beginning, and danger lurked around every corner.</p>
-            `);
         } else {
-            // Random chapters for remaining pages
-            const chapterNum = Math.floor(i / 10) + 1;
             bookPages.push(`
-                <div class="chapter-title">Chapter ${chapterNum}</div>
-                <p>The journey continued through mountains and valleys, across rivers and deserts. Theo and Kael faced many challenges — wild beasts, treacherous terrain, and agents of the Shadow King. But the amulet never failed to guide them.</p>
+                <div class="chapter-title">Chapter ${Math.floor(i/3) + 1}</div>
+                <p>The journey continued through mountains and valleys, across rivers and deserts. Theo and his companions faced many challenges — wild beasts, treacherous terrain, and agents of the Shadow King. But the amulet never failed to guide them.</p>
                 <p>Along the way, they gathered allies: Lyra, a fierce warrior from the southern plains; Brom, a dwarf with unmatched skill in combat; and Elara, an elf whose knowledge of ancient magic proved invaluable. Together, they formed a fellowship bound by a common purpose: to defeat the Shadow King and restore peace to Eldoria.</p>
                 <p>Days turned into weeks. They climbed the Crystal Mountains, where the air was thin and the cold was biting. But finally, they saw it — the entrance to the Crystal Cave, glowing with an ethereal light. "We're close," Theo whispered. The amulet pulsed warmly against his chest.</p>
-                <p>Inside the cave, they found ancient inscriptions on the walls. They told the story of the first Golden King and the prophecy of his return. Theo realized that he wasn't just carrying an amulet — he was carrying the hopes of an entire kingdom.</p>
-                <p style="font-style: italic; margin-top: 20px; color: #7f6a4f;">— Page ${i} of 150 —</p>
+                <p style="font-style: italic; margin-top: 20px; color: #7f6a4f;">— Page ${i} of 50 —</p>
             `);
         }
     }
     
-    // ============================================
-    // PAGE NAVIGATION STATE
-    // ============================================
     let currentPage = 1;
-    let isUnlocked = false; // Track if offer completed
-    
     const pageContentDiv = document.getElementById('pageContent');
     const pageIndicatorSpan = document.getElementById('pageIndicator');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-    const unlockMessageDiv = document.getElementById('unlockMessage');
-    const footerMsg = document.getElementById('footerMsg');
     
-    // Function to render current page
     function renderPage() {
         if (bookPages[currentPage - 1]) {
             pageContentDiv.innerHTML = bookPages[currentPage - 1];
-            pageIndicatorSpan.innerText = `Page ${currentPage} of 150`;
-            
-            // Add animation
+            pageIndicatorSpan.innerText = `Page ${currentPage} of 50`;
             pageContentDiv.classList.remove('fade-in');
             setTimeout(() => pageContentDiv.classList.add('fade-in'), 10);
         }
-        
-        // Update button states
         prevBtn.disabled = (currentPage === 1);
-        nextBtn.disabled = (currentPage === 150);
+        nextBtn.disabled = (currentPage === 50);
     }
     
-    // Navigation event handlers
     prevBtn.addEventListener('click', () => {
         if (currentPage > 1) {
             currentPage--;
@@ -282,83 +231,14 @@
     });
     
     nextBtn.addEventListener('click', () => {
-        if (currentPage < 150) {
+        if (currentPage < 50) {
             currentPage++;
             renderPage();
         }
     });
     
-    // ============================================
-    // OFFER COMPLETION DETECTION
-    // The offer script from head will run automatically
-    // We just need to detect when it's completed
-    // ============================================
-    
-    function onOfferCompleted() {
-        if (isUnlocked) return;
-        isUnlocked = true;
-        
-        // Show unlock message
-        unlockMessageDiv.style.display = 'block';
-        footerMsg.innerHTML = '✅ Book fully unlocked! Thank you for completing the offer. Enjoy reading! ✅';
-        
-        console.log("🎉 Offer completed! Book unlocked.");
-    }
-    
-    // Detect offer completion by checking for changes in the page
-    // Many offer scripts will add a success element or fire an event
-    function startDetection() {
-        // Check for custom events that offer networks might trigger
-        window.addEventListener('offerCompleted', onOfferCompleted);
-        window.addEventListener('contentUnlocked', onOfferCompleted);
-        window.addEventListener('unlockSuccess', onOfferCompleted);
-        
-        // Also check DOM periodically for success indicators
-        const checkInterval = setInterval(() => {
-            if (isUnlocked) {
-                clearInterval(checkInterval);
-                return;
-            }
-            
-            // Check all elements for success text
-            const bodyText = document.body.innerText.toLowerCase();
-            const successKeywords = ['thank you', 'success', 'complete', 'verified', 'congratulations', 'unlocked', 'access granted'];
-            
-            for (let keyword of successKeywords) {
-                if (bodyText.includes(keyword)) {
-                    console.log("Unlock detected via keyword: " + keyword);
-                    onOfferCompleted();
-                    clearInterval(checkInterval);
-                    break;
-                }
-            }
-            
-            // Check if any element with class indicating success exists
-            const successElements = document.querySelectorAll('[class*="success"], [class*="thank"], [class*="complete"], [id*="success"], [id*="thank"]');
-            if (successElements.length > 0) {
-                for (let el of successElements) {
-                    if (el.offsetParent !== null && el.innerText.toLowerCase().includes('thank')) {
-                        onOfferCompleted();
-                        clearInterval(checkInterval);
-                        break;
-                    }
-                }
-            }
-        }, 2000);
-        
-        // Also set a timeout to show that offer is active
-        setTimeout(() => {
-            console.log("Offer script should be running in background.");
-        }, 3000);
-    }
-    
-    // Initialize
     renderPage();
-    startDetection();
-    
-    console.log("Book reader ready. Offer script loaded from head.");
+    console.log("Book ready - offer popup will appear automatically from script in head");
 </script>
-
-<!-- Offer script will automatically execute from head -->
 </body>
 </html>
